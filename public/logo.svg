@@ -1,0 +1,12 @@
+<svg version="1.2"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+    <title>Logo</title>
+    <style>
+		.s0 { fill: #ffffff } 
+    </style>
+    <g id="Figuras">
+        <path id="Rectangulo 1" class="s0" d="m120 44.6l187.3-1.5 318.7 752.9-74.3 184z"/>
+        <path id="Rectangulo 2" class="s0" d="m766 40l134 95.3-250.6 612-89.9-203.2z"/>
+        <path id="Triangulo" class="s0" d="m764.2 40l106.6 3.3 29.2 94.4z"/>
+    </g>
+</svg>
