@@ -1,18 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Selector from "../components/Selector.astro";
+import InputNumber from "../components/InputNumber.astro";
 import "../styles/index.css";
 ---
 
 <Layout title="Conversor Web">
-  <form action="" class="calculator">
-    <p>
-      Número 1: <input type="number" id="number1" placeholder="Número 1">
-    </p>
-    <p>
-      Número 2: <input type="number" id="number2" placeholder="Número 2">
-    </p>
-    <button onclick="sumar()">Convertir</button>
-    <p id="resultado">Conversion: </p>
-
-  </form>
+  <div class="calculator">
+    <Selector />
+    <InputNumber />
+    <p id="resultado">Conversion: 0</p>
+    <button>Convertir</button>
+  </div>
 </Layout>
