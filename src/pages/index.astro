@@ -1,7 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import "../styles/index.css";
 ---
 
 <Layout title="Conversor Web">
-  <h1>Hola mundo xd</h1>
+  <form action="" class="calculator">
+    <p>
+      Número 1: <input type="number" id="number1" placeholder="Número 1">
+    </p>
+    <p>
+      Número 2: <input type="number" id="number2" placeholder="Número 2">
+    </p>
+    <button onclick="sumar()">Convertir</button>
+    <p id="resultado">Conversion: </p>
+
+  </form>
 </Layout>
