@@ -2,14 +2,290 @@
 import Layout from "../layouts/Layout.astro";
 import Selector from "../components/Selector.astro";
 import InputNumber from "../components/InputNumber.astro";
-import "../styles/index.css";
 ---
 
 <Layout title="Conversor Web">
-  <div class="calculator">
-    <Selector />
-    <InputNumber />
-    <p id="resultado">Conversion: 0</p>
-    <button>Convertir</button>
+  <div class="converter-card">
+    <div class="card-header">
+      <h1 class="title">Conversor de Unidades de Almacenamiento</h1>
+      <p class="subtitle">
+        Convierte fácilmente entre diferentes unidades de datos
+      </p>
+    </div>
+
+    <div class="card-content">
+      <div class="input-section">
+        <p class="input-label">Cantidad a convertir</p>
+        <InputNumber />
+      </div>
+
+      <div class="conversion-section">
+        <Selector />
+      </div>
+
+      <div class="result-display">
+        <p class="result-label">Resultado:</p>
+        <p id="resultado" class="result-value">0</p>
+        <p id="resultado-unit" class="result-unit">Bytes</p>
+      </div>
+    </div>
   </div>
 </Layout>
+
+<script>
+  // Factores de conversión a bytes
+  const conversionFactors: Record<string, number> = {
+    Byte: 1,
+    Kilobyte: 1024,
+    Megabyte: 1024 * 1024,
+    Gigabyte: 1024 * 1024 * 1024,
+    Terabyte: 1024 * 1024 * 1024 * 1024,
+  };
+
+  function convertUnits() {
+    const input = document.getElementById("number1") as HTMLInputElement;
+    const fromSelect = document.getElementById("fromUnit") as HTMLSelectElement;
+    const toSelect = document.getElementById("toUnit") as HTMLSelectElement;
+    const resultado = document.getElementById("resultado");
+    const resultadoUnit = document.getElementById("resultado-unit");
+
+    if (!input || !fromSelect || !toSelect || !resultado || !resultadoUnit)
+      return;
+
+    const inputValue = parseFloat(input.value) || 0;
+    const fromUnit = fromSelect.value;
+    const toUnit = toSelect.value;
+
+    // Convertir a bytes primero, luego a la unidad destino
+    const valueInBytes = inputValue * (conversionFactors[fromUnit] || 1);
+    const convertedValue = valueInBytes / (conversionFactors[toUnit] || 1);
+
+    // Formatear el resultado
+    let formattedResult: string;
+    if (convertedValue < 1 && convertedValue > 0) {
+      formattedResult = convertedValue.toExponential(3);
+    } else if (convertedValue >= 1000000) {
+      formattedResult = convertedValue.toExponential(3);
+    } else {
+      formattedResult = convertedValue.toLocaleString("es-ES", {
+        maximumFractionDigits: 6,
+        minimumFractionDigits: 0,
+      });
+    }
+
+    resultado.textContent = formattedResult;
+    resultadoUnit.textContent = toUnit + (convertedValue === 1 ? "" : "s");
+  }
+
+  // Event listeners
+  document.addEventListener("DOMContentLoaded", () => {
+    const convertBtn = document.getElementById("convertBtn");
+    const input = document.getElementById("number1");
+    const fromSelect = document.getElementById("fromUnit");
+    const toSelect = document.getElementById("toUnit");
+
+    convertBtn?.addEventListener("click", convertUnits);
+    input?.addEventListener("input", convertUnits);
+    fromSelect?.addEventListener("change", convertUnits);
+    toSelect?.addEventListener("change", convertUnits);
+
+    // Conversión inicial
+    convertUnits();
+  });
+</script>
+
+<style>
+  .converter-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-width: 500px;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  .converter-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.15),
+      0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    margin-bottom: 2rem;
+  }
+
+  .title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .subtitle {
+    color: #64748b;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 400;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .input-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    text-align: left;
+  }
+
+  .conversion-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .result-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .convert-button {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.35);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .convert-button:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px 0 rgba(59, 130, 246, 0.45);
+  }
+
+  .convert-button:active {
+    transform: translateY(0);
+  }
+
+  .button-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .result-display {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .result-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+    line-height: 1.2;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  .result-unit {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3b82f6;
+    margin: 0.25rem 0 0 0;
+    word-wrap: break-word;
+  }
+
+  @media (max-width: 640px) {
+    .converter-card {
+      padding: 1.5rem;
+      margin: 1rem;
+      max-width: calc(100vw - 2rem);
+      width: calc(100% - 2rem);
+    }
+
+    .title {
+      font-size: 1.5rem;
+    }
+
+    .result-value {
+      font-size: 1.5rem;
+    }
+
+    .convert-button {
+      padding: 0.875rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .converter-card {
+      padding: 1rem;
+      margin: 0.5rem;
+      max-width: calc(100vw - 1rem);
+      width: calc(100% - 1rem);
+    }
+
+    .title {
+      font-size: 1.25rem;
+    }
+
+    .result-value {
+      font-size: 1.25rem;
+    }
+  }
+</style>

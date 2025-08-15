@@ -2,48 +2,123 @@
 
 ---
 
-<datalist id="numerosComunes">
-  <option value="1024"></option>
-  <option value="2048"></option>
-  <option value="3072"></option>
-  <option value="4096"></option>
-  <option value="5120"></option>
-  <option value="6144"></option>
-  <option value="7168"></option>
-  <option value="8192"></option>
-  <option value="8192"></option>
-  <option value="9216"></option>
-</datalist>
-<input
-  type="number"
-  id="number1"
-  placeholder="Cantidad"
-  min="0"
-  max="9999999"
-  value="0"
-  step="1024"
-  list="numerosComunes"
-/>
+<div class="input-container">
+  <datalist id="numerosComunes">
+    <option value="1024"></option>
+    <option value="2048"></option>
+    <option value="3072"></option>
+    <option value="4096"></option>
+    <option value="5120"></option>
+    <option value="6144"></option>
+    <option value="7168"></option>
+    <option value="8192"></option>
+    <option value="9216"></option>
+    <option value="10240"></option>
+  </datalist>
+
+  <input
+    type="number"
+    id="number1"
+    placeholder="Ingresa la cantidad..."
+    min="0"
+    max="999999999999"
+    value="1024"
+    step="1"
+    list="numerosComunes"
+    class="number-input"
+  />
+
+  <div class="input-helper">
+    <span class="helper-text">Puedes usar valores como 1024, 2048, 4096...</span
+    >
+  </div>
+</div>
+
 <style>
-  input {
-    width: 75%;
-    text-align: center;
-    cursor: pointer;
-    height: 40px;
-    outline: 0;
-    background: #f0f0f0;
-    color: #7b7b7b;
-    font-size: 1em;
-    font-family: "Quicksand", sans-serif;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+
+  .number-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #1e293b;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    font-family: "Inter", system-ui, sans-serif;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .number-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .number-input:hover {
+    border-color: #cbd5e1;
+  }
+
+  .number-input::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  .number-input[type="number"]::-webkit-inner-spin-button,
+  .number-input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  input[type="number"] {
+
+  .number-input[type="number"] {
     -moz-appearance: textfield;
+  }
+
+  .input-helper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .helper-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 400;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 640px) {
+    .number-input {
+      font-size: 1rem;
+      padding: 0.875rem;
+    }
+
+    .helper-text {
+      font-size: 0.6875rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .number-input {
+      font-size: 0.875rem;
+      padding: 0.75rem;
+    }
+
+    .helper-text {
+      font-size: 0.625rem;
+    }
   }
 </style>

@@ -2,44 +2,163 @@
 
 ---
 
-<p>
-  <select>
-    <option>Byte</option>
-    <option>Kilobyte</option>
-    <option>Megabyte</option>
-    <option>Gigabyte</option>
-    <option>Terabyte</option>
-  </select>
-  <img src="/arrows.svg" alt="Icon Arrows" width="32" height="auto" />
-  <select>
-    <option>Byte</option>
-    <option>Kilobyte</option>
-    <option>Megabyte</option>
-    <option>Gigabyte</option>
-    <option>Terabyte</option>
-  </select>
-</p>
+<div class="selector-container">
+  <div class="selector-group">
+    <p class="selector-label">De:</p>
+    <select id="fromUnit" class="selector">
+      <option value="Byte">Byte</option>
+      <option value="Kilobyte" selected>Kilobyte</option>
+      <option value="Megabyte">Megabyte</option>
+      <option value="Gigabyte">Gigabyte</option>
+      <option value="Terabyte">Terabyte</option>
+    </select>
+  </div>
+
+  <div class="arrow-container">
+    <div class="arrow-circle">
+      <img src="/arrows.svg" alt="Icon Arrows" width="20" height="20" />
+    </div>
+  </div>
+
+  <div class="selector-group">
+    <p class="selector-label">A:</p>
+    <select id="toUnit" class="selector">
+      <option value="Byte">Byte</option>
+      <option value="Kilobyte">Kilobyte</option>
+      <option value="Megabyte" selected>Megabyte</option>
+      <option value="Gigabyte">Gigabyte</option>
+      <option value="Terabyte">Terabyte</option>
+    </select>
+  </div>
+</div>
 
 <style>
-  p {
+  .selector-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 18px;
-  }
-  select {
-    display: inline-block;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
     width: 100%;
-    text-align: center;
-    cursor: pointer;
-    padding: 7px 10px;
-    height: 42px;
-    outline: 0;
-    background: #f0f0f0;
-    color: #7b7b7b;
-    font-size: 1em;
-    font-family: "Quicksand", sans-serif;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+  }
+
+  .selector-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 140px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .selector-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    text-align: left;
+  }
+
+  .selector {
+    appearance: none;
+    background: white;
+    border: 2px solid #e2e8f0;
     border-radius: 12px;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .selector:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .selector:hover {
+    border-color: #cbd5e1;
+  }
+
+  .arrow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .arrow-circle {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border-radius: 50%;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.35);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .arrow-circle:hover {
+    transform: scale(1.1);
+  }
+
+  .arrow-circle img {
+    filter: brightness(0) invert(1);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .selector-container {
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .selector-group {
+      width: 100%;
+      min-width: unset;
+      max-width: 100%;
+    }
+
+    .selector {
+      width: 100%;
+    }
+
+    .arrow-container {
+      margin-top: 0;
+    }
+
+    .arrow-circle {
+      transform: rotate(90deg);
+    }
+
+    .arrow-circle:hover {
+      transform: rotate(90deg) scale(1.1);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .selector-container {
+      gap: 1rem;
+    }
+
+    .selector {
+      font-size: 0.875rem;
+      padding: 0.75rem 0.875rem;
+      padding-right: 2.25rem;
+    }
   }
 </style>
